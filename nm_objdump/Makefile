@@ -1,75 +1,58 @@
 ##
-## Makefile for Makefile in /home/nasrat_v/Dev/rendu/tek2/Systeme-Unix/Memoire/PSU_2016_nmobjdump
+## EPITECH PROJECT, 2018
 ## 
-## Made by Valentin Nasraty
-## Login   <valentin.nasraty@epitech.eu>
+## File description:
 ## 
-## Started on  Tue Feb 14 13:43:14 2017 Valentin Nasraty
-## Last update Fri Feb 24 00:14:20 2017 Valentin Nasraty
 ##
 
-SRC_NM		= nm/nm.c \
-		  nm/core_architecture.c \
-		  nm/64-bits/file_Elf64.c \
-		  nm/64-bits/string_table_Elf64.c \
-		  nm/64-bits/section_Elf64.c \
-		  nm/64-bits/table_Elf64.c \
-		  nm/64-bits/error_Elf64.c \
-		  nm/64-bits/type_Elf64.c \
-		  nm/32-bits/file_Elf32.c \
-		  nm/32-bits/string_table_Elf32.c \
-		  nm/32-bits/section_Elf32.c \
-		  nm/32-bits/table_Elf32.c \
-		  nm/32-bits/error_Elf32.c \
-		  nm/32-bits/type_Elf32.c
+NM = ./my_nm
 
-SRC_OBJ		= objdump/objdump.c \
-		  objdump/core_architecture.c \
-		  objdump/64-bits/error_Elf64.c \
-		  objdump/64-bits/file_Elf64.c \
-		  objdump/64-bits/flags_Elf64.c \
-		  objdump/64-bits/section_Elf64.c \
-		  objdump/64-bits/string_table_Elf64.c \
-		  objdump/64-bits/table_Elf64.c \
-		  objdump/32-bits/error_Elf32.c \
-		  objdump/32-bits/file_Elf32.c \
-		  objdump/32-bits/flags_Elf32.c \
-		  objdump/32-bits/section_Elf32.c \
-		  objdump/32-bits/string_table_Elf32.c \
-		  objdump/32-bits/table_Elf32.c
+OBJDUMP = ./my_objdump
 
-OBJ_NM		= $(SRC_NM:.c=.o)
+CC	= gcc
 
-OBJ_OBJ		= $(SRC_OBJ:.c=.o)
+RM	= rm -f
 
-CC		= gcc
+SRC_NM	= ./nm/src/main.c \
+	  ./nm/src/nm.c \
+	  ./nm/src/symlist.c \
+	  ./nm/src/symtype.c \
 
-RM		= rm -f
+SRC_OBJDUMP = ./objdump/src/dump.c \
+	  ./objdump/src/flags.c \
+	  ./objdump/src/flags32.c \
+	  ./objdump/src/main.c \
+	  ./objdump/src/objdump.c \
+	  ./objdump/src/objdump32.c 
 
-MATH		= -lm
+OBJS_NM	= $(SRC_NM:.c=.o)
 
-NAME_NM		= my_nm
+OBJS_OBJDUMP = $(SRC_OBJDUMP:.c=.o)
 
-NAME_OBJ	= my_objdump
+CFLAGS = -I./nm/inc/ -I./objdump/inc
 
-CFLAGS		= -W -Werror -Wextra -Wall -pedantic -std=gnu99
+CFLAGS += -W -Wall -Wextra
 
-all:		clean nm objdump
+all: $(NM) $(OBJDUMP)
 
-$(NAME_NM):	$(OBJ_NM)
-		$(CC) -o $(NAME_NM) $(OBJ_NM) $(MATH)
+nm: $(NM)
 
-$(NAME_OBJ):	$(OBJ_OBJ)
-		$(CC) -o $(NAME_OBJ) $(OBJ_OBJ) $(MATH)
+objdump: $(OBJDUMP)
 
-nm:		$(NAME_NM)
+$(NM): $(OBJS_NM)
+	 $(CC) $(OBJS_NM) -o $(NM) $(LDFLAGS)
 
-objdump:	$(NAME_OBJ)
+$(OBJDUMP): $(OBJS_OBJDUMP)
+	 $(CC) $(OBJS_OBJDUMP) -o $(OBJDUMP) $(LDFLAGS)
 
 clean:
-		$(RM) $(OBJ_NM) $(OBJ_OBJ)
+	$(RM) $(OBJS_NM)
+	$(RM) $(OBJS_OBJDUMP)
 
-fclean:		clean
-		$(RM) $(NAME_NM) $(NAME_OBJ)
+fclean: clean
+	$(RM) $(NM)
+	$(RM) $(OBJDUMP)
 
-re:		fclean all
+re: fclean all
+
+.PHONY: all clean fclean re
