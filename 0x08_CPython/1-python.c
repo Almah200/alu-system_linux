@@ -26,10 +26,10 @@ void print_python_list(PyObject *b)
 	list = (PyListObject *)b;
 	size = PyList_GET_SIZE(b);
 	k = list->allocated;
-	printf("[*] Size of the Python List = %ld\n[*] Allocated = %li\n", size, k);
+	printf("[*] Size of the Python List = %ld\n[*] Allocated = %lj\n", size, k);
 	for (j = 0; j < size; j++)
 	{
-		q = Py_TYPE(PyList_GetItem(b, i))->tp_name;
-		printf("Element %li: %s\n", i, q);
+		q = Py_TYPE(PyList_GetItem(b, j))->tp_name;
+		printf("Element %lj: %s\n", j, q);
 	}
 }
