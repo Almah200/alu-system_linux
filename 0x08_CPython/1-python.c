@@ -8,28 +8,28 @@
 #include <string.h>
 /**
  * print_python_list - print python things
- * @b: pointer to PyObject b
+ * @p: pointer to PyObject p
  */
-void print_python_list(PyObject *b)
+void print_python_list(PyObject *p)
 {
-	size_t k, size, j;
-	const char *q;
+	size_t a, size, i;
+	const char *t;
 	PyListObject *list;
 
 	setbuf(stdout, NULL);
 	printf("[*] Python list info\n");
-	if (PyList_Check(b) == 0)
+	if (PyList_Check(p) == 0)
 	{
 		printf("  [ERROR] Invalid List Object\n");
 		return;
 	}
-	list = (PyListObject *)b;
-	size = PyList_GET_SIZE(b);
-	k = list->allocated;
-	printf("[*] Size of the Python List = %ld\n[*] Allocated = %lj\n", size, k);
-	for (j = 0; j < size; j++)
+	list = (PyListObject *)p;
+	size = PyList_GET_SIZE(p);
+	a = list->allocated;
+	printf("[*] Size of the Python List = %ld\n[*] Allocated = %li\n", size, a);
+	for (i = 0; i < size; i++)
 	{
-		q = Py_TYPE(PyList_GetItem(b, j))->tp_name;
-		printf("Element %lj: %s\n", j, q);
+		t = Py_TYPE(PyList_GetItem(p, i))->tp_name;
+		printf("Element %li: %s\n", i, t);
 	}
 }
